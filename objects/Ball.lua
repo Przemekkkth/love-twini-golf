@@ -39,9 +39,11 @@ function Ball:update(dt)
         if self:getScale().y < 0.001 then 
             self:setScale( self:getScale().x, -0.001)
         end
+
+        return
     end
 
-    for index, _hole in ipairs(holes) do
+    for index, _hole in ipairs(holes) do --holes is in main.lua
         local marginX = 5 
         local marginY = 5 
 
@@ -67,6 +69,12 @@ function Ball:update(dt)
         local _velocityX =  self:getInitialMousePos().x - mouseX
         local _velocityY =  self:getInitialMousePos().y - mouseY
         
+        if _velocityX == 0 then
+            _velocityX = 0.01
+        elseif _velocityY == 0 then
+            _velocityY = 0.01
+        end
+
         self:setVelocity(_velocityX, _velocityY)
         self:setLaunchedVelocity(_velocityX, _velocityY)
         self.velocity1D = math.sqrt(math.pow(math.abs(self:getVelocity().x), 2) + math.pow(math.abs(self:getVelocity().y), 2))
@@ -127,7 +135,7 @@ function Ball:update(dt)
         if self:getPos().x + self.texture:getWidth() > SCREEN_WIDTH / (2 - self.index) then
             self:setVelocity(-math.abs(self:getVelocity().x), self:getVelocity().y)
             self.dirX = -1
-        elseif self:getPos().x < (self.index * 320) then
+        elseif self:getPos().x < (self.index * SCREEN_WIDTH / 2) then
             self:setVelocity(math.abs(self:getVelocity().x), self:getVelocity().y)
             self.dirX = 1
         elseif self:getPos().y + self.texture:getHeight()> SCREEN_HEIGHT then
@@ -136,6 +144,23 @@ function Ball:update(dt)
         elseif self:getPos().y < 0 then
             self:setVelocity(self:getVelocity().x, math.abs(self:getVelocity().y))
             self.dirY = 1
+        end
+
+        for index, _tile in ipairs(tiles) do
+            local newX = self:getPos().x + self:getVelocity().x * dt
+            local newY = self:getPos().y
+            if newX + 16 > _tile:getPos().x and newX < _tile:getPos().x + _tile.texture:getWidth() and newY + 16 > _tile:getPos().y and newY < _tile:getPos().y + _tile.texture:getHeight() - 3 then
+                self:setVelocity(-self:getVelocity().x, self:getVelocity().y)
+                self.dirX = -self.dirX
+            end
+
+            local newX = self:getPos().x
+            local newY = self:getPos().y + self:getVelocity().y * dt
+
+            if newX + 16 > _tile:getPos().x and newX < _tile:getPos().x + _tile.texture:getWidth() and newY + 16 > _tile:getPos().y and newY < _tile:getPos().y + _tile.texture:getHeight() - 3 then
+                self:setVelocity(self:getVelocity().x, -self:getVelocity().y)
+                self.dirY = -self.dirY
+            end
         end
     end
 end

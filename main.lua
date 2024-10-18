@@ -4,7 +4,7 @@ Input  = require 'libraries/Input'
 require 'Spritesheet'
 require 'Entity'
 function love.load()
-    current_level = 1
+    current_level = 3
     tiles = {}
     holes = {}
     input = Input()
