@@ -1,0 +1,15 @@
+Ball_IMG = love.graphics.newImage('assets/sprite/ball.png')
+BallShadow_IMG = love.graphics.newImage('assets/sprite/ball_shadow.png')
+Point_IMG = love.graphics.newImage('/assets/sprite/point.png')
+TileDark32_IMG = love.graphics.newImage('/assets/sprite/tile32_dark.png')
+TileDark64_IMG = love.graphics.newImage('/assets/sprite/tile64_dark.png')
+TileLight32_IMG = love.graphics.newImage('/assets/sprite/tile32_light.png')
+TileLight64_IMG = love.graphics.newImage('/assets/sprite/tile64_light.png')
+Bg_IMG = love.graphics.newImage('/assets/sprite/bg.png')
+LevelText_IMG = love.graphics.newImage('/assets/sprite/levelText_bg.png')
+PowermeterBG_IMG = love.graphics.newImage('/assets/sprite/powermeter_bg.png')
+PowermeterFG_IMG = love.graphics.newImage('/assets/sprite/powermeter_fg.png')
+PowermeterOverlay_IMG = love.graphics.newImage('/assets/sprite/powermeter_overlay.png')
+Hole_IMG = love.graphics.newImage('/assets/sprite/hole.png')
+
+TILE_TYPE = {DARK_32 = 0, LIGHT_32 = 1, DARK_64 = 2, LIGHT_64 = 3}
