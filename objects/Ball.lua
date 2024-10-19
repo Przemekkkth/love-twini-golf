@@ -18,6 +18,7 @@ function Ball:new(area, x, y, opts)
     self.friction = 0.33
     self.speed = 5.0
     self.texture = Ball_IMG
+    self.playedSwingSFX = true
 end
 
 function Ball:update(dt)    
@@ -56,10 +57,14 @@ function Ball:update(dt)
                 self:setPos(_hole:getPos().x, _hole:getPos().y)
                 self.target.x = _hole:getPos().x
                 self.target.y = _hole:getPos().y
+                sounds.hole:play()
         end
     end
 
     if input:pressed('leftButton') and self.canMove then
+        self.playedSwingSFX = false
+        sounds.charge:play()
+
         local x, y = love.mouse.getPosition()
         self:setInitialMousePos(x, y)
         if x < SCREEN_WIDTH / 2 then
@@ -100,16 +105,12 @@ function Ball:update(dt)
             self.launchedVelocity1D = 0.001
         end
     else
-        
-        --[[
-        if (!playedSwingFx)
-        {
-            mSound.play(SoundEffect::Swing);
-            playedSwingFx = true;
-            strokes++;
-        }
+        if self.playedSwingSFX == false then
+            self.playedSwingSFX = true
+            sounds.swing:play()
+            --strokes
+        end
 
-        ]]
         self:hidePowerBar()
 
         self:hidePoint()
