@@ -4,7 +4,12 @@ Input  = require 'libraries/Input'
 require 'Spritesheet'
 require 'Entity'
 function love.load()
-    current_level = 3
+    current_level = 8
+    sounds = {}
+    sounds.charge = love.audio.newSource('assets/sfx/charge.ogg', 'static')
+    sounds.hole   = love.audio.newSource('assets/sfx/hole.ogg', 'static') 
+    sounds.swing  = love.audio.newSource('assets/sfx/swing.ogg', 'static')
+
     tiles = {}
     holes = {}
     input = Input()

@@ -66,8 +66,8 @@ function Ball:update(dt)
 
     if input:down('leftButton') and self.canMove then
         local mouseX, mouseY = love.mouse.getPosition()
-        local _velocityX =  self:getInitialMousePos().x - mouseX
-        local _velocityY =  self:getInitialMousePos().y - mouseY
+        local _velocityX =  (self:getInitialMousePos().x - mouseX) * 2
+        local _velocityY =  (self:getInitialMousePos().y - mouseY) * 2
         
         if _velocityX == 0 then
             _velocityX = 0.01
