@@ -10,6 +10,7 @@ function love.load()
     sounds.hole   = love.audio.newSource('assets/sfx/hole.ogg', 'static') 
     sounds.swing  = love.audio.newSource('assets/sfx/swing.ogg', 'static')
 
+    isLeftHalfClicked = false
     tiles = {}
     holes = {}
     input = Input()

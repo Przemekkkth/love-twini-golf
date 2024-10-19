@@ -62,6 +62,11 @@ function Ball:update(dt)
     if input:pressed('leftButton') and self.canMove then
         local x, y = love.mouse.getPosition()
         self:setInitialMousePos(x, y)
+        if x < SCREEN_WIDTH / 2 then
+            isLeftHalfClicked = true
+        else
+            isLeftHalfClicked = false
+        end
     end
 
     if input:down('leftButton') and self.canMove then
@@ -203,7 +208,9 @@ end
 function Ball:showPoint(mouseX, mouseY)
     if self.point then
         self.point:setActive(true)
-        self.point:setAngle(math.atan2(self:getPos().y - mouseY, self:getPos().x - mouseX) + math.pi / 2)
+        if (self.index == 0 and isLeftHalfClicked == true) or (self.index == 1 and isLeftHalfClicked == false) then
+            self.point:setAngle(math.atan2(self:getPos().y - mouseY, self:getPos().x - mouseX) + math.pi / 2)
+        end
         self.point:setPos(self:getPos().x, self:getPos().y)
     end
 end

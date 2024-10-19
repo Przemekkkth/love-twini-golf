@@ -8,6 +8,7 @@ end
 function GameScreen:update(dt)
     self.area:update(dt)
     self:checkWin()
+    self:syncPointRotation()
 end
 
 function GameScreen:draw()
@@ -206,5 +207,13 @@ function GameScreen:checkWin()
         self.area = nil
         self.area = Area(self)
         self:loadLevel()
+    end
+end
+
+function GameScreen:syncPointRotation()
+    if isLeftHalfClicked == true then
+        self.ball1.point:setAngle( self.ball.point:getAngle() )  
+    else
+        self.ball.point:setAngle( self.ball1.point:getAngle() )
     end
 end
