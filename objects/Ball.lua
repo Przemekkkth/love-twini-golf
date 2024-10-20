@@ -19,6 +19,7 @@ function Ball:new(area, x, y, opts)
     self.speed = 5.0
     self.texture = Ball_IMG
     self.playedSwingSFX = true
+    self.shadowTex = BallShadow_IMG
 end
 
 function Ball:update(dt)    
@@ -108,7 +109,7 @@ function Ball:update(dt)
         if self.playedSwingSFX == false then
             self.playedSwingSFX = true
             sounds.swing:play()
-            --strokes
+            strokes = strokes + 1
         end
 
         self:hidePowerBar()
@@ -169,6 +170,13 @@ function Ball:update(dt)
             end
         end
     end
+end
+
+function Ball:draw()
+    if not self.win then
+        love.graphics.draw(self.shadowTex, self.x+4, self.y+4)
+    end
+    Ball.super.draw(self)
 end
 
 function Ball:setVelocity(x, y)

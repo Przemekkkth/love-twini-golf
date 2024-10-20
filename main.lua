@@ -1,19 +1,25 @@
 Object = require 'libraries/Classic'
 Input  = require 'libraries/Input'
+Timer  = require 'libraries/Timer'
 
 require 'Spritesheet'
 require 'Entity'
 function love.load()
-    current_level = 8
+    current_level = 0
     sounds = {}
     sounds.charge = love.audio.newSource('assets/sfx/charge.ogg', 'static')
     sounds.hole   = love.audio.newSource('assets/sfx/hole.ogg', 'static') 
     sounds.swing  = love.audio.newSource('assets/sfx/swing.ogg', 'static')
+    font          = love.graphics.newFont('assets/font/minecraft.ttf', 30)
+    big_font      = love.graphics.newFont('assets/font/minecraft.ttf', 65)
+    love.graphics.setFont(font)
+    strokes = 0
 
     isLeftHalfClicked = false
     tiles = {}
     holes = {}
     input = Input()
+    timer = Timer()
 
     input:bind('left', 'left_arrow')
     input:bind('right', 'right_arrow')
@@ -24,6 +30,9 @@ function love.load()
     input:bind('backspace', 'backspace')
     input:bind('n', 'n')
     input:bind('escape', 'escape')
+    input:bind('enter', 'enter')
+    input:bind('e', 'enter')
+    input:bind('return', 'enter')
 
     local object_files = {}
     recursiveEnumerate('objects', object_files)
@@ -34,7 +43,7 @@ function love.load()
     requireFiles(object_files)
 
     current_room = nil
-    gotoRoom('GameScreen')
+    gotoRoom('TitleScreen')
 end
 
 function love.update(dt)
@@ -42,6 +51,10 @@ function love.update(dt)
         current_room:update(dt) 
     end
 
+    timer:update(dt)
+    if input:released('escape') then
+        love.event.quit()
+    end
  --[[   if input:released('escape') then 
         love.event.quit()
     elseif input:released('backspace') then

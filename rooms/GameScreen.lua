@@ -9,11 +9,28 @@ function GameScreen:update(dt)
     self.area:update(dt)
     self:checkWin()
     self:syncPointRotation()
+    if input:released('backspace') then
+        gotoRoom('MenuScreen')
+    end
 end
 
 function GameScreen:draw()
     love.graphics.draw(Bg_IMG, 0, 0)
     self.area:draw()
+
+    love.graphics.setFont(font)
+    love.graphics.draw(LevelText_IMG, 96, 448)
+    local font = love.graphics.getFont()
+    local text = "Holes: "..(current_level*2)
+    local textWidth = font:getWidth(text)
+    local textHeight = font:getHeight()
+    love.graphics.print("Holes: "..(current_level*2), 160, 470, 0, 1, 1, textWidth / 2, textHeight / 2)
+    
+    love.graphics.draw(LevelText_IMG, 416, 448)
+    love.graphics.print("Holes: "..(current_level*2+1), 480, 470, 0, 1, 1, textWidth / 2, textHeight / 2)
+
+    love.graphics.draw(UI_BG_IMG, 222, 0)
+    love.graphics.print("Strokes: "..strokes, 242, 5)
 end
 
 function GameScreen:loadLevel()
@@ -139,7 +156,7 @@ end
 
 function GameScreen:loadHoles()
     holes = {}
-    if current_level == 1 or current_level == 2 or current_level == 3 then 
+    if current_level == 0 or current_level == 1 or current_level == 2 or current_level == 3 then 
         table.insert(holes, self.area:addGameObject('Hole', 8 + 32*4, 8 + 32*2, {}) )
         table.insert(holes, self.area:addGameObject('Hole', 8 + 32*4 + 32*10, 8 + 32*2, {}) )
     elseif current_level == 3 then
@@ -164,7 +181,7 @@ function GameScreen:loadHoles()
 end
 
 function GameScreen:loadBalls()
-    if current_level == 1 or current_level == 2 then
+    if current_level == 0 or current_level == 1 or current_level == 2 then
         self.ball = self.area:addGameObject('Ball', 24 + 32*4, 24 + 32 * 11, {index = 0})
         self.ball1 = self.area:addGameObject('Ball', 24 + 32*4 + 32*10, 24 + 32*11, {index = 1})
     elseif current_level == 3 then 
