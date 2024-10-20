@@ -221,6 +221,9 @@ end
 function GameScreen:checkWin() 
     if self.ball:getScale().x < 0.0 and self.ball1:getScale().x < 0 then
         current_level = current_level + 1
+        if current_level >= 9 then
+            gotoRoom('WinScreen')
+        end
         self.area = nil
         self.area = Area(self)
         self:loadLevel()

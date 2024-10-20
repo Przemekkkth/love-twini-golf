@@ -154,3 +154,9 @@ function pushRotateScale(x, y, r, sx, sy)
     love.graphics.scale(sx or 1, sy or sx or 1)
     love.graphics.translate(-x, -y)
 end
+
+function love.keypressed(key)
+    if key == "c" then
+        --love.graphics.captureScreenshot(os.time() .. ".png") -- uncomment if you want to make screenshot
+    end
+end
